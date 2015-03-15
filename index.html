@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bootprint by nknapp</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Bootprint</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/nknapp/bootprint">View the Project on GitHub <small>nknapp/bootprint</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/nknapp/bootprint/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/nknapp/bootprint/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/nknapp/bootprint">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p><code>bootprint</code> is a tool for converting JSON-files into static HTML-pages using <a href="http://lesscss.org">{less}</a>,
+<a href="http://getbootstrap.com">Bootstrap</a> and <a href="http://handlebarsjs.com">Handlebars</a>.</p>
+
+<p>It is designed with flexibility in mind:</p>
+
+<ul>
+<li>You can easily modify the styling by providing your own {less}-files.</li>
+<li>You can easily replace the Handlebars template and any register partial</li>
+<li>You can include custom handlebars-helpers or override existing ones.</li>
+<li>You can create packages with default-configurations, publish them on <a href="http://npmjs.org">npm</a>
+and use them as base for further customizations.
+<em>That is not entirely possible yet, but will be once the module is complete</em>
+</li>
+</ul>
+
+<h2>
+<a id="command-line-usage" class="anchor" href="#command-line-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command line usage</h2>
+
+<p><code>bootprint</code> itself does not contain any templates, so in order to use <code>bootprint</code>, you need to install a template
+package (e.g. <a href="http://npmjs.org/bootprint-json-schema">bootprint-json-schema</a>). So try the following.</p>
+
+<div class="highlight highlight-bash"><pre>npm install -g bootprint
+npm install -g bootprint-json-schema
+bootprint json-schema http://json-schema.org/schema target</pre></div>
+
+<p>The directory "target" should now contain a file <code>index.html</code> and <code>main.css</code> which contain a readble
+form of the <a href="http://json-schema.org">Core/Validation Meta-Schema</a>.</p>
+
+<h2>
+<a id="programmatic-usage" class="anchor" href="#programmatic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Programmatic usage</h2>
+
+<p><em>Coming soon</em></p>
+
+<h2>
+<a id="advanced-configuration" class="anchor" href="#advanced-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced configuration</h2>
+
+<p><em>Coming soon</em></p>
+
+<h2>
+<a id="writing-your-own-template-modules" class="anchor" href="#writing-your-own-template-modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing your own template-modules</h2>
+
+<p>*See <a href="http://github.com/nknapp/bootprint-json-schema">bootprint-json-schema</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/nknapp">nknapp</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
