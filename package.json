@@ -6,6 +6,7 @@
   "bin": {
     "bootprint": "bin/bootprint.js"
   },
+  "preferGlobal": true,
   "scripts": {
     "preformat": "standard --version || npm -g install standard",
     "format": "standard --format",

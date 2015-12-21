@@ -18,7 +18,7 @@ and use them as base for further customizations.
 # Installation
 
 ```
-npm install bootprint
+npm install -g bootprint
 ```
 
 After installing `bootprint` perform the following steps
