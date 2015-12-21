@@ -3,30 +3,8 @@
 
 When using Bootprint from the command line, you can provide a file with configuration options. The configuration options override the default-options of the module that you specify in the `<spec>` command-line-parameter. This means, by providing a config-file, you alter the behaviour of the `<spec>`, for example by providing alternative styles of by overriding Handlebars partials.
 
-The configuration file is a JavaScript file of the following form:
-
-```js
-module.exports = {
-    "handlebars": {
-        "partials": "/path/to/a/partial-directory",
-        "template": "/path/To/a/template",
-        "helpers": {
-            "handlebarsHelper": function(value) { ... }
-        },
-        "targetFile": "index.html",
-        "preprocessor": function(obj) { ... }
-    },
-    "less": {
-        "main": [
-            "path/to/a/less/file.less",
-            "path/to/another/less/file.less"
-        ],
-        "paths": [
-            "a/less/include/path"
-        ]
-    }
-}
-```
+The configuration file is a JavaScript file that exports an object matching 
+[this extended JSON-schema](./configuration-schema.json)
 
 When using Bootprint's JavaScript-API, the same format can be passed to
 the [BootprintBuilder.merge()](api.md#BootprintBuilder#merge) function.

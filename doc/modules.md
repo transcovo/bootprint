@@ -41,8 +41,7 @@ structure it like this:
     └── main.less
 ```
 
-All parts except `index.js` and `package.json` are optional. There are no default paths. Any 
-path, that should be used by bootprint, must be configured. 
+All parts except `index.js` and `package.json` are optional. All paths must be configured. 
 
 **index.js** contains a bootprint-configuration for these folders. 
 In addition to the configuration, the contents of the `package.json`-file is 
@@ -85,7 +84,7 @@ and its dependencies.
 ## Development mode
 
 The file watcher and the live-reload server can be started using the "-d" option of the command-line utility.
-Got to http://localhost:8181 and your current bootprint-result will be displayed. Change any 
+Open a browser one [http://localhost:8181] and your current bootprint-result will be displayed. Change any 
 template-file, partial, less-file, js-file containing helpers and the browser will automatically reload the page
 once the bootprint-generaion is complete.
 
@@ -110,7 +109,7 @@ API-documentation automatically based on this convention.
 
 * Document your less-files with jsdoc-like tags.
 
-  * Use the `@api public`-tag to mark definitions that should be visible
+  * Use the `@public`-tag to mark definitions that should be visible
     to other modules
 
   * Use the `@readonly`-tag to mark definitions that should not be modified
@@ -142,6 +141,9 @@ API-documentation automatically based on this convention.
     not be modified or overridden by another module. Bootprint does not enforce this, 
     but it is a good hint for other developers about what you are considering part of the API.
 
+  * Use the `@override`-tag to mark definitions that override partials or templates from
+    other modules.
+
   Example: `definitions.hbs` from `bootprint-swagger`:
 
 ```hbs
@@ -149,6 +151,8 @@ API-documentation automatically based on this convention.
 Renders the definition-section of the HTML-page.
 @param {Definition[]} definitions a list of JSON-subschemas.
 @api public
+@readonly
+@override
 --}}
 ```
 
