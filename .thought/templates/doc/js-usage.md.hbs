@@ -2,10 +2,14 @@
 
 ## Usage
 
+After installing the packages...
+
 ```bash
 npm install --save bootprint
 npm install --save bootprint-swagger
 ```
+
+...run the following javascript:
 
 ```js
 var bootprint = require('bootprint')
@@ -42,6 +46,26 @@ and a template module installed locally.
   
 ## More examples
 
-More examples can be found in the [bootprint-examples](https://github.com/nknapp/bootprint-examples) 
-repository.
-  
+The following setup demonstrates the usage of without the use of any other modules
+
+{{dirTree 'examples/' }}
+
+The following example demonstrates how to use this module:
+
+{{{example 'examples/example.js'}}}
+
+This will generate the following output:
+
+{{{exec 'node example.js' cwd='examples/'}}}
+
+The output shows the list of generated files. This is useful for post-processors. 
+For example, the output files could be run through a combiner-tool like {{npm 'inline-html'}} to 
+generate a single self-contained file.
+
+## Customization examples:
+
+The [bootprint-examples](https://github.com/nknapp/bootprint-examples) repository contains some more examples 
+of adaptions of the existing configuration-modules `bootprint-swagger` and `bootprint-jsons-schema`.
+Go ahead, have a look!
+
+

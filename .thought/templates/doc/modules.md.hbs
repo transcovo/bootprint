@@ -41,43 +41,13 @@ structure it like this:
     └── main.less
 ```
 
-All parts except `index.js` and `package.json` are optional. There are no default paths. Any 
-path, that should be used by bootprint, must be configured. 
+All parts except `index.js` and `package.json` are optional. All paths must be configured. 
 
 **index.js** contains a bootprint-configuration for these folders. 
 In addition to the configuration, the contents of the `package.json`-file is 
 included in the export:
   
-```js
-var path = require('path')
-
-// Export function to create new config (builder is passed in from outside)
-module.exports = function (builder) {
-  return builder
-    .load(require('bootprint-inherited-module-name'))
-    .merge({
-      'handlebars': {
-        'partials': path.join(__dirname, 'handlebars/partials'),
-        'templates': require.resolve('./handlebars/templates'),
-        'preprocessor': require('./handlebars/preprocessor.js'),
-        'helpers': require.resolve('./handlebars/helpers.js')
-      },
-      'less': {
-        'main': [
-          require.resolve('./less/main.less')
-        ],
-        'paths': [
-          path.join(__dirname, 'less/include')
-        ]
-      }
-    })
-}
-
-// Add "package" metadata. This can be evaluated by documentation generators
-module.exports.package = require('./package')
-
-```
-
+{{include '.thought/module-example.js'}}
 
 For examples, have a look at the existing template-modules (e.g. [bootprint-swagger](https://github.com/nknapp/bootprint-swagger)
 and its dependencies.
@@ -85,7 +55,7 @@ and its dependencies.
 ## Development mode
 
 The file watcher and the live-reload server can be started using the "-d" option of the command-line utility.
-Got to http://localhost:8181 and your current bootprint-result will be displayed. Change any 
+Open a browser one [http://localhost:8181] and your current bootprint-result will be displayed. Change any 
 template-file, partial, less-file, js-file containing helpers and the browser will automatically reload the page
 once the bootprint-generaion is complete.
 
@@ -110,7 +80,7 @@ API-documentation automatically based on this convention.
 
 * Document your less-files with jsdoc-like tags.
 
-  * Use the `@api public`-tag to mark definitions that should be visible
+  * Use the `@public`-tag to mark definitions that should be visible
     to other modules
 
   * Use the `@readonly`-tag to mark definitions that should not be modified
@@ -132,7 +102,7 @@ API-documentation automatically based on this convention.
 * Document your handlebars-partials by inserting a comment at the very beginning
   of the file.
 
-  * Add a jsdoc-like `{{!--`-comment to the beginning of the partial. Describe expected parameters and
+  * Add a jsdoc-like `\{{!--`-comment to the beginning of the partial. Describe expected parameters and
     outputs.
 
   * Add a `@api public` to the comment partial that
@@ -142,15 +112,20 @@ API-documentation automatically based on this convention.
     not be modified or overridden by another module. Bootprint does not enforce this, 
     but it is a good hint for other developers about what you are considering part of the API.
 
+  * Use the `@override`-tag to mark definitions that override partials or templates from
+    other modules.
+
   Example: `definitions.hbs` from `bootprint-swagger`:
 
-```hbs
-{{!--
-Renders the definition-section of the HTML-page.
-@param {Definition[]} definitions a list of JSON-subschemas.
-@api public
---}}
-```
+    ```hbs
+    \{{!--
+    Renders the definition-section of the HTML-page.
+    @param {Definition[]} definitions a list of JSON-subschemas.
+    @api public
+    @readonly
+    @override
+    --}}
+    ```
 
 *See [bootprint-json-schema](http://github.com/nknapp/bootprint-json-schema) for an example, although it does not follow of the above rules yet.*
 *For a module extending another bootprint-module, see [bootprint-swagger](http://github.com/nknapp/bootprint-swagger).*

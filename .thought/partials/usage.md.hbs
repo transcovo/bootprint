@@ -1,15 +1,28 @@
-## Usage
+After installing `bootprint` perform the following steps
 
-The following setup demonstrates the usage of Bootprint
+```bash
+# Install template module
+npm install -g bootprint-swagger
+# Run bootprint with the template
+bootprint swagger http://petstore.swagger.io/v2/swagger.json target
+```
 
-{{dirTree 'examples/' }}
+The directory "target" should now contain a file `index.html` and `main.css` which contain a readable
+form of the [Swagger-Petstore-Example](http://petstore.swagger.io/).
 
-The following example demonstrates how to use this module:
+## Further documentation Documentation
 
-{{{example 'examples/example.js'}}}
+* **[Command line interface](doc/cli.md)** - How to use Bootprint from the command line.
+* **[JavaScript API](doc/jsapi.md)** - How to call Bootprint from JavaScript.
+* **[Configuration Options](doc/config.md)** - How to customize Bootprint for your own purposes.
+* **[Developing modules](doc/modules.md)** - How to create your own modules for bootprint
+* **[Release Notes](CHANGELOG.md)**
 
-This will generate the following output
+## Available modules
 
-{{{exec 'node example.js' cwd='examples/'}}}
-
-    
+* **[base](https://npmjs.org/package/bootprint-base)** contains a basic template
+as a base for other modules.
+* **[json-schema](https://npmjs.org/package/bootprint-json-schema)** creates readble docs from
+[JSON-Schema-Definitions](http://www.json-schema.org)
+* **[swagger](https://npmjs.org/package/bootprint-swagger)** creates readable docs from
+[Swagger definitions](http://swagger.io).
