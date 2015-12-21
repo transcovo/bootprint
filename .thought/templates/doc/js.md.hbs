@@ -30,10 +30,10 @@ a node-like environment. In order to do that, you need to have the `bootprint`-m
 and a template module installed locally.
 
 
-* `require("bootprint")` returns an instance of the [BootprintBuilder class](api.md#BootprintBuilder).
-  This class provides methods to load and override configuration options in a defined way.
-  The class is designed to be immutable: Methods that modify the configuration always 
-  return a new instance of `BootprintBuilder`.
+* `require("bootprint")` returns an preconfigured {{npm 'customize'}} instance) that 
+  provides methods to load and override configuration options in a defined way.
+  The object is designed to be immutable: Methods that modify the configuration always 
+  return a new instance of `customize`.
 * The [load function](api.md#BooprintBuilder#load) loads a template-module based on the
   current configuration. The method returns a new BootprintBuilder.
 * The [merge function](api.md#BootprintBuilder#merge) overrides options from the current
