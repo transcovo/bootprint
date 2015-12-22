@@ -50,18 +50,19 @@ The result of the method-call an object containing one key for each registered e
 
 In Bootprint, the Customize prototype is extended to include the following method: 
 
-#### `.build(input:(string|object), targetDir:string):Bootprint`
+#### .build(input:(string|object), targetDir:string):Bootprint
 
 This method is kept as legacy interface to Bootprint. It returns a new instance of the Bootprint class that can
 be used to write the result of the engines to a directory and to create a file-watcher
 
-#### Parameters: 
-
-* `input`: If this parameter is a string, it is either interpreted as URL (if starting with `http://` or `https://`) 
-or as path to a JSON or YAML file from which the input data for the Handlebars-engine is loaded. If it is a plain-object, it is 
-used as input directly. In any case, the input is merged into the `handlebars.data` part of the configuration.
-
-* `targetDir`: This string is a path to the directory where the output files of Bootprint should be stored.
+##### Parameters:
+* `input`: If this parameter is a string, it is either interpreted as URL (if 
+        starting with `http://` or `https://`) or as path to a JSON or YAML file 
+        from which the input data for the Handlebars-engine is loaded. If it is a 
+        plain-object, it is used as input directly. In any case, the input is merged
+        into the `handlebars.data` part of the configuration.
+* `targetDir`: This string is a path to the directory where the output files of 
+        Bootprint should be stored.
 
 ### The Bootprint object 
 
