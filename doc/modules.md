@@ -78,13 +78,13 @@ module.exports.package = require('./package')
 ```
 
 
-For examples, have a look at the existing template-modules (e.g. [bootprint-swagger](https://github.com/nknapp/bootprint-swagger)
+For examples, have a look at the existing template-modules (e.g. [bootprint-swagger](https://github.com/nknapp/bootprint-swagger))
 and its dependencies.
 
 ## Development mode
 
 The file watcher and the live-reload server can be started using the "-d" option of the command-line utility.
-Open a browser one [http://localhost:8181] and your current bootprint-result will be displayed. Change any 
+Open a browser one http://localhost:8181 and your current bootprint-result will be displayed. Change any 
 template-file, partial, less-file, js-file containing helpers and the browser will automatically reload the page
 once the bootprint-generaion is complete.
 
