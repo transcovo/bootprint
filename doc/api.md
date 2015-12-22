@@ -68,12 +68,12 @@ be used to write the result of the engines to a directory and to create a file-w
 
 The Bootprint object provides the following methods:
 
-### `.generate():Promise&lt;string[]>`
+#### .generate():Promise&lt;string[]>
 
 This method runs all configured engines and writes the result to the target directory using the [customize-write-files](https://npmjs.com/package/customize-write-files)
 module. The result of this call is a Promise for a list of generated files.
 
-### `.watch():EventEmitter`
+#### .watch():EventEmitter
 
 This method starts a file-watcher that observes all configuration, input and helper files and directories relevant for the current 
 configuration. If a file change, the whole process of merging configurations and running the engine is restartet.
