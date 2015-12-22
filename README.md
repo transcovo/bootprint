@@ -30,8 +30,8 @@ npm install -g bootprint-swagger
 bootprint swagger http://petstore.swagger.io/v2/swagger.json target
 ```
 
-The directory "target" should now contain a file `index.html` and `main.css` which contain a readable
-form of the [Swagger-Petstore-Example](http://petstore.swagger.io/).
+The directory "target" should now contain a file `index.html` and `main.css` which contain a [readable
+form](http://petstore.swagger.io.bp.knappi.org/v2/swagger.json) of the [Swagger-Petstore-Example](http://petstore.swagger.io/).
 
 ## Further documentation Documentation
 
@@ -46,7 +46,7 @@ form of the [Swagger-Petstore-Example](http://petstore.swagger.io/).
 
 * **[base](https://npmjs.org/package/bootprint-base)** contains a basic template
 as a base for other modules.
-* **[json-schema](https://npmjs.org/package/bootprint-json-schema)** creates readble docs from
+* **[json-schema](https://npmjs.org/package/bootprint-json-schema)** creates readable docs from
 [JSON-Schema-Definitions](http://www.json-schema.org)
 * **[swagger](https://npmjs.org/package/bootprint-swagger)** creates readable docs from
 [Swagger definitions](http://swagger.io).

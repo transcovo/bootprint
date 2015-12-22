@@ -1,15 +1,15 @@
 # JavaScript API 
 
-## Usage
+## Using an existing module
 
-After installing the packages...
+In order to use a module (e.g. [bootprint-swagger](https://npmjs.com/package/bootprint-swagger) from javascript, install `bootprint` and the module:  
 
 ```bash
 npm install --save bootprint
 npm install --save bootprint-swagger
 ```
 
-...run the following javascript:
+Then run the following javascript:
 
 ```js
 var bootprint = require('bootprint')
@@ -23,7 +23,7 @@ var bootprint = require('bootprint')
 The directory "target" should now contain a file `index.html` and `main.css` which contain a readable
 form of the [Swagger-Petstore-Example](http://petstore.swagger.io/).
 
-## What happens in this example?
+## En detail...
 
 `bootprint` currently does **not** support browsers. The JavaScript API can only be accessed in 
 a node-like environment. In order to do that, you need to have the `bootprint`-module 
@@ -34,19 +34,19 @@ and a template module installed locally.
   provides methods to load and override configuration options in a defined way.
   The object is designed to be immutable: Methods that modify the configuration always 
   return a new instance of `customize`.
-* The [load function](api.md#BooprintBuilder#load) loads a template-module based on the
+* The [load function](api.md#loadconfigurationmodulefunctioncustomizecustomizecustomizecustomize) loads a template-module based on the
   current configuration. The method returns a new BootprintBuilder.
-* The [merge function](api.md#BootprintBuilder#merge) overrides options from the current
+* The [merge function](api.md#mergeconfigurationobject-customize) overrides options from the current
   configuration with values from an explicit configuration object.
   See [the configuration reference](config.md) for details about configuration options
-* The [build function](api.md#BooprintBuilder#build) function returns a preconfigured instance 
-  of the [Bootprint class](api.md#Bootprint)
-* The [generate function](api.md#Bootprint#generate) invokes Handlebars and LESS. 
+* The [build function](api.md#buildinputstringobject-targetdirstringbootprint) function returns a preconfigured instance 
+  of the [Bootprint class](api.md#the-bootprint-class)
+* The [generate function](api.md#generatepromisestring) invokes Handlebars and LESS. 
   It returns a promise that is fulfilled when Bootprint is finished.
   
-## More examples
+## Merging configurations
 
-The following setup demonstrates the usage of without the use of any other modules
+Consider th following file-hierarchy:
 
 <pre><code>
 
@@ -65,7 +65,7 @@ The following setup demonstrates the usage of without the use of any other modul
   └── index.html.hbs
 </code></pre>
 
-The following example demonstrates how to use this module:
+The following code demonstrates the usage of the `.merge`-function without loading any module:
 
 ```js
 require('bootprint')
@@ -83,7 +83,7 @@ require('bootprint')
   .done(console.log);
 ```
 
-This will generate the following output:
+This will generate the output:
 
 ```
 [ 'target/index.html', 'target/main.css', 'target/main.css.map' ]
@@ -93,7 +93,7 @@ The output shows the list of generated files. This is useful for post-processors
 For example, the output files could be run through a combiner-tool like [inline-html](https://npmjs.com/package/inline-html) to 
 generate a single self-contained file.
 
-## Customization examples:
+## More examples:
 
 The [bootprint-examples](https://github.com/nknapp/bootprint-examples) repository contains some more examples 
 of adaptions of the existing configuration-modules `bootprint-swagger` and `bootprint-jsons-schema`.
