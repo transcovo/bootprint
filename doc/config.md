@@ -1,13 +1,16 @@
 # Configuration
 
 
-When using Bootprint from the command line, you can provide a file with configuration options. The configuration options override the default-options of the module that you specify in the `<spec>` command-line-parameter. This means, by providing a config-file, you alter the behaviour of the `<spec>`, for example by providing alternative styles of by overriding Handlebars partials.
+When using Bootprint from the command line, you can provide a file with configuration options. 
+The configuration options override the default-options of the module that you specify in the **&lt;spec>** 
+command-line-parameter. This means, by providing a config-file, you can alter the behaviour defined in this module. 
+You can provide alternative styles or different contents.
 
 The configuration file is a JavaScript file that exports an object matching 
-[this extended JSON-schema](./configuration-schema.json)
+[this extended JSON-schema](./configuration-schema.json).
 
-When using Bootprint's JavaScript-API, the same format can be passed to
-the [BootprintBuilder.merge()](api.md#BootprintBuilder#merge) function.
+When using Bootprint's JavaScript-API, the same format can be passed to the
+[BootprintBuilder.merge()](api.md#mergeconfigurationobject-customize) function.
 
 ## Providing themes with custom {less}-files.
 
@@ -40,43 +43,58 @@ included in the `bootprint-base` module.
 
 ## Overriding and adding partials
 
-In the bootprint-configuration, you can provide a directory containing partials, for example: 
+In the bootprint-configuration, you can provide a directory containing partials, for example:
 
 ```js
+var path = require('path')
 module.exports = {
-    // Use "require.resolve" to ensure the correct absolute path to the directory.
-    "partials": require('path').join(__dirname,"./partials")
+  handlebars: {
+    partials: path.join(__dirname, './partials')
+  }
 }
 
 ```
 
-The template directory is traversed recursively and all `.hbs`-files are registered as partial under the name relative to the `partials`-directory and
-without the extension. For example, `partials/json-schema/properties.hbs` can be accessed in Handlebars by writing `{{>json-schema/properties}}`.
 
-The module you are using already has partials and you can override them by providing a partial file with the same relative path inside *your* `partials`-directory. For example, if you are using the `bootprint-json-schema` module, you can override its partial `json-schema/properties` by adding a `partials/json-schema/properties.hbs` file to your local directory.
+The partials directory is traversed recursively and all `.hbs`-files are registered as partial under
+their path relative to the `partials`-directory and without the extension. For example, 
+`partials/json-schema/properties.hbs` can be accessed in Handlebars by writing `{{>json-schema/properties}}`.
 
-*You should be careful overriding partials of other modules. The author should have documented, which partials are meant to be overridden. If you override other partials anyway, you may introduce copy-code and miss bug-fixes later on.* 
+The module you are using already has partials and you can override them by providing a partial file with the 
+same relative path inside *your* `partials`-directory. For example, if you are using the `bootprint-json-schema`
+module, you can override its partial `json-schema/properties` by adding a `partials/json-schema/properties.hbs` 
+file to your local directory.
+
+*You should be careful overriding partials of other modules. The author should have documented, which partials 
+are meant to be overridden. If you override other partials anyway, you may introduce copy-code and miss bug-fixes 
+later on.* 
 
 *At the moment, the existing modules do not have such a documentation. I hope to add some soon.* 
 
 
 ## Overriding the main template
 
-You can also replace the whole template by a custom version:
+You can also replace the whole template and add other templates that are compiled as well.
 
 ```js
+var path = require('path')
 module.exports = {
-    "template": require.resolve("./template.hbs")
+  handlebars: {
+    templates: path.join(__dirname, './templates')
+  }
 }
+
 ```
-This should not be necessary. There are usually some high-level partials that can be overridden such as `base/body`, `base/footer` or `base/header` defined in `bootprint-base`.
-You still might want to do it for one of the following reasons:
-
-* You are writing a module, but you do not want to use the `bootprint-base` module. *(If the `bootprint-base` module is not flexible enough for you, you should file an issue on github instead of using your own template.)*
-
-* You are writing a module, but you want to generate something other than HTML. *(That's a valid reason, but then the {less}-part of Bootprint is also an add-on you do not need.)* 
 
 
+If you put an `index.html.hbs`-file into the `temlates/`-directory, it will override the default template.
+If you put an `second.html.hbs`-file into this directory, a `second.html`-file will be created in your
+target diretory.
+You can also create a directory-tree with subdirectory containing templates. The tree will be recreated with 
+the compiled template in the `target`-directory
+
+*Note: If you feel that the `index.html.hbs` provided with `bootprint-base` doesn't fit your needs, please let me know!
+Maybe we can adapt it to be more flexible.*
 
 ## Providing custom helpers
 
@@ -85,84 +103,126 @@ provide custom helpers to the configuration:
 
 ```js
 module.exports = {
-    "helpers": {
-        "shout-loud": function(value) {
-            return value.toUpperCase();
-        }
+  handlebars: {
+    helpers: {
+      "shout-loud": function (value) {
+        return value.toUpperCase();
+      }
     }
+  }
 }
+
 ```
+
 
 Or you can set the path to a JavaScript-module exporting an object of functions
 
 ```js
 // handlebars/helpers.js
 module.exports = {
-   "shout-loud": function(value) {
-       return value.toUpperCase();
-   } 
+  'shout-loud': function (value) {
+    return value.toUpperCase()
+  }
 }
 
-// configuration file
+// bootprint-configuration
 module.exports = {
-    "helpers": require.resolve("./handlebars/helpers.js");
+  handlebars: {
+    helpers: require.resolve('./handlebars/helpers.js')
+  }
 }
+
 ```
+
+
+*Note that we use `require.resolve` to reference the helper file and not `require`. That way, Bootprint can 
+register a file-watcher in development mode and automatically update the output when a helper changes.*
 
 If one of your helpers already exists in the module you are using, it replaces the original helper.
 
-Helpers are called with one more parameter than usual in Handlebars. The additional
-parameter is an object containing information about the current Bootprint instance with the following keys:
+Usually, if you call a helper in Handlebars using `{{helper param1 param2}}`, the helper needs to be a 
+`function(param1, param2, options)`, where `options` contains additional information such as named
+parameters and block data.
+
+Bootprint provides one more parameter to the helper:
 
 ```js
-{
-    engine: // contains the active Handlebars engine,
-    config: // contains the resolved Bootprint configuration.
-}
+function(param1, param2, options, bootprint)
 ```
+
+where
+
+* `bootprint.engine` contains the active Handlebars engine and
+* `bootprint.config` contains the resolved Bootprint configuration
 
 This object is mostly useful, if you create your own Bootprint module: 
- **engine** allows you to access engine internals (such as the registered partials ) from the helper and **config** allows you to build configurable templates.
+ **engine** allows you to access engine internals (such as the registered partials ) 
+from the helper and **config** allows you to build configurable templates.
 
-*Note: It is planned to provide mechanisms and conventions for module-configuration, such as a helper that accesses the Bootprint-configuration in a predefined way.*
+*Note: I thought about providing mechanisms and conventions for module-configuration, 
+such as a helper that accesses the Bootprint-configuration in a predefined way.
+Let me know, if your are in need of such a feature.*
 
-## Target file
-
-By default, an `index.html`-file is written into the specified output directory.
-If you want to call the file differently (for example because you are actually,
-creating a markdown file, you can specify:
-
-```js
-module.exports = {
-    handlebars: {
-        targetFile: 'README.md'
-    }
-}
-```
 
 ## Preprocessor
 
-Sometimes it is easier to modify the structure of a JSON before applying the Handlebars template than to solve rendering problems within the template. 
+Sometimes it is easier to modify the structure of a JSON before applying the Handlebars 
+template than to solve rendering problems within the template. 
 
 In such a case, you can include a preprocessor-function in the configuration:
 
 ```js
 module.exports = {
-    handlebars: {
-        /**
-         * @param {object} obj the input JSON object.
-         * @return {object|Promise<object>} an object of the promise for an object
-         **/
-        preprocessor: function(obj) {
-            // Call parent preprocessor
-            var result = this.parent(object);
-            // Do something to the result
-            // Return either the result or a promise for the result.
-            return result;
-        }
+  handlebars: {
+    /**
+     * @param {object} obj the input JSON object.
+     * @return {object|Promise<object>} an object of the promise for an object
+     **/
+    preprocessor: function (obj) {
+      // Call parent preprocessor
+      var result = this.parent(object)
+      // Do something to the result
+      // Return either the result or a promise for the result.
+      return result
     }
+  }
 }
+
 ```
+
+
+You can also put the preprocessor into its own javascript-file and reference the file from the configuration:
+
+```js
+// preprocessor.js
+/**
+ * @param {object} obj the input JSON object.
+ * @return {object|Promise<object>} an object or the promise for an object
+ **/
+module.exports = function (obj) {
+  // Call parent preprocessor
+  var result = this.parent(object);
+  // Do something to the result
+  // Return either the result or a promise for the result.
+  return result;
+}
+
+
+
+// configuration file
+module.exports = {
+  handlebars: {
+
+    preprocessor: require.resolve('./preprocessor.js')
+  }
+}
+
+```
+
+
+*As with the helpers we use `require.resolve` and not `require`; Bootprint will `require` the file itself. The big advantage is
+that in the development mode Bootprint is able to register a file-watcher for the preprocessor-file so that 
+the output will be automatically regenerated when the preprocessor changes.*
 
 Inside Bootprint, the preprocessor is called in a promise-chain, so you can either return a promise or the actual result.
 
